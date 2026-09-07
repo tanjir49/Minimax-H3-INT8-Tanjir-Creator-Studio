@@ -4,6 +4,17 @@ A self-hosted creative workspace for ComfyUI: image and video generation, refere
 
 This source release contains **no generated images, videos, audio, user uploads, account database, model weights, or credentials**. Cinema preview art is replaced by a neutral SVG placeholder. Your own generated media stays in ignored runtime folders.
 
+## Download the workflow and required files
+
+The repository ships the workflow and source only. AI models, custom-node implementations, runtimes, and checkpoints are not bundled.
+
+- Download the repository with GitHub's **Code > Download ZIP**, then extract it.
+- Windows users can double-click **`Download MiniMax H3 Files.cmd`**.
+- Enter the existing ComfyUI folder and choose the required Core INT8 pack. Turbo, PDD 8-step, and the 3D latent upscaler are separate optional choices.
+- Interrupted downloads can be resumed by running the downloader again. Existing completed files are skipped.
+
+The downloader fetches files directly from their upstream Hugging Face publishers into the correct `ComfyUI/models/` folders. Review and accept the upstream model licenses before downloading. MiniMax H3's core files are large, so keep ample free disk space.
+
 ## Interface screenshots
 
 Captured from this source release with a clean demo account and empty gallery. No existing generated image, video, uploaded reference, or personal project is shown. The model backend was intentionally disconnected for UI verification, so the screenshots show Studio offline.

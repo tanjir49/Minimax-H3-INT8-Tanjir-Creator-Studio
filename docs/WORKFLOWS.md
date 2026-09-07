@@ -2,6 +2,8 @@
 
 The ten JSON files in `workflows/` are the deployed Studio graph templates and cinema overrides, sanitized for distribution. Load image/video inputs are blank; select your own files when using graphs directly. In Studio these inputs are populated from your own uploads.
 
+For the main MiniMax H3 INT8 graph, Windows users can run `Download MiniMax H3 Files.cmd`. The downloader presents the core and optional packs separately and puts each selected model in its expected ComfyUI model directory. It does not install executable custom nodes; use ComfyUI Manager to resolve missing nodes after opening the workflow.
+
 Open each graph in ComfyUI and resolve missing nodes/models before using its Studio preset. `cinema-lab-profile.json` and `cinema-consistency-profile.json` are overrides applied by Studio, not standalone ComfyUI UI graphs. Model filenames matter: install the matching files or update both graph templates and the corresponding hardcoded defaults in `generation.py`.
 
 [workflow-inventory.json](workflow-inventory.json) lists node types, model filenames, and upstream URLs found in the graphs. It also includes dynamic API node names from generation.py. Notes embedded in the graphs retain upstream download pointers.
