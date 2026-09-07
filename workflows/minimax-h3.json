@@ -1,0 +1,1488 @@
+{
+  "last_node_id": 111,
+  "last_link_id": 34,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "UNETLoader",
+      "pos": [
+        20,
+        20
+      ],
+      "size": [
+        300,
+        120
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+        "default"
+      ],
+      "title": "Ref2VA INT8 ConvRot"
+    },
+    {
+      "id": 3,
+      "type": "ApplyMiniMaxH3FirstBlockCache",
+      "pos": [
+        680,
+        20
+      ],
+      "size": [
+        330,
+        200
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            3
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ApplyMiniMaxH3FirstBlockCache"
+      },
+      "widgets_values": [
+        "H3 Fast — 0.10 / max 2",
+        0.1,
+        0.1,
+        0.95,
+        2,
+        false
+      ],
+      "title": "MiniMax H3 FirstBlockCache"
+    },
+    {
+      "id": 4,
+      "type": "MiniMaxH3SigmaShift",
+      "pos": [
+        1040,
+        20
+      ],
+      "size": [
+        300,
+        120
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            17,
+            19
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MiniMaxH3SigmaShift"
+      },
+      "widgets_values": [
+        12,
+        3
+      ]
+    },
+    {
+      "id": 5,
+      "type": "CLIPLoader",
+      "pos": [
+        20,
+        220
+      ],
+      "size": [
+        300,
+        120
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            4
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPLoader"
+      },
+      "widgets_values": [
+        "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+        "minimax",
+        "default"
+      ],
+      "title": "Qwen3-VL 32B NVFP4"
+    },
+    {
+      "id": 6,
+      "type": "VAELoader",
+      "pos": [
+        20,
+        380
+      ],
+      "size": [
+        300,
+        120
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            5,
+            26
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "minimax_h3_video_vae_fp16.safetensors"
+      ],
+      "title": "Video VAE"
+    },
+    {
+      "id": 7,
+      "type": "VAELoader",
+      "pos": [
+        20,
+        510
+      ],
+      "size": [
+        300,
+        120
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            6,
+            28
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "minimax_h3_audio_vae_fp32.safetensors"
+      ],
+      "title": "Audio VAE"
+    },
+    {
+      "id": 8,
+      "type": "MiniMaxH3ReferenceToVideo",
+      "pos": [
+        1400,
+        240
+      ],
+      "size": [
+        520,
+        600
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 4
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 5
+        },
+        {
+          "name": "audio_vae",
+          "type": "VAE",
+          "link": 6
+        },
+        {
+          "name": "ref_images.ref_image_0",
+          "type": "IMAGE",
+          "link": 7
+        },
+        {
+          "name": "ref_images.ref_image_1",
+          "type": "IMAGE",
+          "link": 8
+        },
+        {
+          "name": "ref_images.ref_image_2",
+          "type": "IMAGE",
+          "link": 9
+        },
+        {
+          "name": "ref_images.ref_image_3",
+          "type": "IMAGE",
+          "link": 10
+        },
+        {
+          "name": "ref_images.ref_image_4",
+          "type": "IMAGE",
+          "link": 11
+        },
+        {
+          "name": "ref_images.ref_image_5",
+          "type": "IMAGE",
+          "link": 12
+        },
+        {
+          "name": "ref_images.ref_image_6",
+          "type": "IMAGE",
+          "link": 13
+        },
+        {
+          "name": "ref_images.ref_image_7",
+          "type": "IMAGE",
+          "link": 14
+        },
+        {
+          "name": "ref_images.ref_image_8",
+          "type": "IMAGE",
+          "link": 15
+        },
+        {
+          "name": "ref_videos.ref_video_0",
+          "type": "IMAGE",
+          "link": 32
+        },
+        {
+          "name": "ref_video_audios.ref_video_audio_0",
+          "type": "AUDIO",
+          "link": 33
+        },
+        {
+          "name": "ref_audios.ref_audio_0",
+          "type": "AUDIO",
+          "link": 34
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            16
+          ]
+        },
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            24
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MiniMaxH3ReferenceToVideo"
+      },
+      "widgets_values": [
+        "A cinematic landscape at sunrise, natural light, gentle camera movement.",
+        1344,
+        768,
+        243,
+        "match"
+      ],
+      "title": "9 Images + Motion Video + Voice/Audio | RTX 5080 16GB"
+    },
+    {
+      "id": 10,
+      "type": "BasicGuider",
+      "pos": [
+        2310,
+        160
+      ],
+      "size": [
+        300,
+        120
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 17
+        },
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 16
+        }
+      ],
+      "outputs": [
+        {
+          "name": "GUIDER",
+          "type": "GUIDER",
+          "links": [
+            21
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "BasicGuider"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 11,
+      "type": "KSamplerSelect",
+      "pos": [
+        2310,
+        360
+      ],
+      "size": [
+        300,
+        120
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "SAMPLER",
+          "type": "SAMPLER",
+          "links": [
+            22
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSamplerSelect"
+      },
+      "widgets_values": [
+        "res_multistep"
+      ]
+    },
+    {
+      "id": 12,
+      "type": "BasicScheduler",
+      "pos": [
+        2310,
+        500
+      ],
+      "size": [
+        300,
+        120
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 19
+        }
+      ],
+      "outputs": [
+        {
+          "name": "SIGMAS",
+          "type": "SIGMAS",
+          "links": [
+            23
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "BasicScheduler"
+      },
+      "widgets_values": [
+        "simple",
+        20,
+        1
+      ],
+      "title": "Simple Scheduler — 20 Steps"
+    },
+    {
+      "id": 13,
+      "type": "RandomNoise",
+      "pos": [
+        2310,
+        680
+      ],
+      "size": [
+        300,
+        120
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "NOISE",
+          "type": "NOISE",
+          "links": [
+            20
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "RandomNoise"
+      },
+      "widgets_values": [
+        490701
+      ]
+    },
+    {
+      "id": 14,
+      "type": "SamplerCustomAdvanced",
+      "pos": [
+        2670,
+        320
+      ],
+      "size": [
+        300,
+        120
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "noise",
+          "type": "NOISE",
+          "link": 20
+        },
+        {
+          "name": "guider",
+          "type": "GUIDER",
+          "link": 21
+        },
+        {
+          "name": "sampler",
+          "type": "SAMPLER",
+          "link": 22
+        },
+        {
+          "name": "sigmas",
+          "type": "SIGMAS",
+          "link": 23
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 24
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "LATENT",
+          "links": [
+            25,
+            27
+          ]
+        },
+        {
+          "name": "denoised_output",
+          "type": "LATENT",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SamplerCustomAdvanced"
+      },
+      "widgets_values": [],
+      "title": "res_multistep / simple / 20"
+    },
+    {
+      "id": 15,
+      "type": "VAEDecode",
+      "pos": [
+        3040,
+        240
+      ],
+      "size": [
+        300,
+        120
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 25
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 26
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            29
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 16,
+      "type": "VAEDecodeAudio",
+      "pos": [
+        3040,
+        430
+      ],
+      "size": [
+        300,
+        120
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 27
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 28
+        }
+      ],
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "type": "AUDIO",
+          "links": [
+            30
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecodeAudio"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 17,
+      "type": "CreateVideo",
+      "pos": [
+        3390,
+        300
+      ],
+      "size": [
+        300,
+        120
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 29
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 30
+        }
+      ],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            31
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CreateVideo"
+      },
+      "widgets_values": [
+        24,
+        8
+      ],
+      "title": "Native AV mux — 24 FPS"
+    },
+    {
+      "id": 18,
+      "type": "SaveVideo",
+      "pos": [
+        3740,
+        300
+      ],
+      "size": [
+        300,
+        120
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 31
+        }
+      ],
+      "outputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveVideo"
+      },
+      "widgets_values": [
+        "MiniMax_H3/tutorial_workflow",
+        "mp4",
+        "h264"
+      ],
+      "title": "MP4 H.264 Output"
+    },
+    {
+      "id": 100,
+      "type": "LoadImage",
+      "pos": [
+        350,
+        260
+      ],
+      "size": [
+        300,
+        220
+      ],
+      "flags": {},
+      "order": 100,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            7
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "",
+        "image"
+      ],
+      "title": "Picture 1: 01_face_identity"
+    },
+    {
+      "id": 101,
+      "type": "LoadImage",
+      "pos": [
+        680,
+        260
+      ],
+      "size": [
+        300,
+        220
+      ],
+      "flags": {},
+      "order": 101,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            8
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "",
+        "image"
+      ],
+      "title": "Picture 2: 02_full_body"
+    },
+    {
+      "id": 102,
+      "type": "LoadImage",
+      "pos": [
+        1010,
+        260
+      ],
+      "size": [
+        300,
+        220
+      ],
+      "flags": {},
+      "order": 102,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            9
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "",
+        "image"
+      ],
+      "title": "Picture 3: 03_wardrobe"
+    },
+    {
+      "id": 103,
+      "type": "LoadImage",
+      "pos": [
+        350,
+        520
+      ],
+      "size": [
+        300,
+        220
+      ],
+      "flags": {},
+      "order": 103,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            10
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "",
+        "image"
+      ],
+      "title": "Picture 4: 04_archive_beacon"
+    },
+    {
+      "id": 104,
+      "type": "LoadImage",
+      "pos": [
+        680,
+        520
+      ],
+      "size": [
+        300,
+        220
+      ],
+      "flags": {},
+      "order": 104,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            11
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "",
+        "image"
+      ],
+      "title": "Picture 5: 05_embassy_environment"
+    },
+    {
+      "id": 105,
+      "type": "LoadImage",
+      "pos": [
+        1010,
+        520
+      ],
+      "size": [
+        300,
+        220
+      ],
+      "flags": {},
+      "order": 105,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            12
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "",
+        "image"
+      ],
+      "title": "Picture 6: 06_lighting"
+    },
+    {
+      "id": 106,
+      "type": "LoadImage",
+      "pos": [
+        350,
+        780
+      ],
+      "size": [
+        300,
+        220
+      ],
+      "flags": {},
+      "order": 106,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            13
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "",
+        "image"
+      ],
+      "title": "Picture 7: 07_action_pose"
+    },
+    {
+      "id": 107,
+      "type": "LoadImage",
+      "pos": [
+        680,
+        780
+      ],
+      "size": [
+        300,
+        220
+      ],
+      "flags": {},
+      "order": 107,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            14
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "",
+        "image"
+      ],
+      "title": "Picture 8: 08_profile_identity"
+    },
+    {
+      "id": 108,
+      "type": "LoadImage",
+      "pos": [
+        1010,
+        780
+      ],
+      "size": [
+        300,
+        220
+      ],
+      "flags": {},
+      "order": 108,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            15
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "",
+        "image"
+      ],
+      "title": "Picture 9: 09_target_composition"
+    },
+    {
+      "id": 109,
+      "type": "VHS_LoadVideo",
+      "pos": [
+        -1280,
+        1180
+      ],
+      "size": [
+        420,
+        420
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 2,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            32
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "frame_count",
+          "type": "INT",
+          "links": null,
+          "slot_index": 1
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": [
+            33
+          ],
+          "slot_index": 2
+        },
+        {
+          "name": "video_info",
+          "type": "VHS_VIDEOINFO",
+          "links": null,
+          "slot_index": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VHS_LoadVideo"
+      },
+      "widgets_values": [
+        "",
+        24,
+        0,
+        0,
+        0,
+        0,
+        1,
+        "None"
+      ],
+      "title": "OPTIONAL: Motion / Camera Reference Video (24 FPS)"
+    },
+    {
+      "id": 110,
+      "type": "LoadAudio",
+      "pos": [
+        -1280,
+        1640
+      ],
+      "size": [
+        420,
+        180
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 2,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "type": "AUDIO",
+          "links": [
+            34
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadAudio"
+      },
+      "widgets_values": [
+        ""
+      ],
+      "title": "OPTIONAL: Voice / Audio Reference"
+    },
+    {
+      "id": 111,
+      "type": "MarkdownNote",
+      "pos": [
+        1435.0,
+        860.0
+      ],
+      "size": [
+        390,
+        600
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 109,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "Video Resolution Chart",
+      "properties": {
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.7",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "    VIDEO RESOLUTION GUIDE\n    \n    16:9 Landscape\n    240p   = 426 × 240\n    360p   = 640 × 360\n    480p   = 864 × 480\n    720p   = 1280 × 720\n    1080p  = 1920 × 1080\n    2K     = 2560 × 1440\n    4K     = 3840 × 2160\n    \n    9:16 Portrait\n    240p   = 240 × 426\n    360p   = 360 × 640\n    480p   = 480 × 864\n    720p   = 720 × 1280\n    1080p  = 1080 × 1920\n    2K     = 1440 × 2560\n    4K     = 2160 × 3840\n    \n    24 FPS FRAME COUNT\n    5 sec  = 121 frames\n    10 sec = 241 frames\n    15 sec = 361 frames\n    20 sec = 481 frames\n    \n    MiniMax recommended:\n    480p Landscape = 864 × 480\n    720p Landscape = 1280 × 720\n    480p Portrait  = 480 × 864\n    720p Portrait  = 720 × 1280\n    \n    Use dimensions divisible by 16/32.\n    Use frame count 4n+1.\n    Lower resolution = faster render and lower VRAM."
+      ],
+      "color": "#6b5426",
+      "bgcolor": "#2d2417"
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      3,
+      0,
+      "MODEL"
+    ],
+    [
+      3,
+      3,
+      0,
+      4,
+      0,
+      "MODEL"
+    ],
+    [
+      4,
+      5,
+      0,
+      8,
+      0,
+      "CLIP"
+    ],
+    [
+      5,
+      6,
+      0,
+      8,
+      1,
+      "VAE"
+    ],
+    [
+      6,
+      7,
+      0,
+      8,
+      2,
+      "VAE"
+    ],
+    [
+      7,
+      100,
+      0,
+      8,
+      3,
+      "IMAGE"
+    ],
+    [
+      8,
+      101,
+      0,
+      8,
+      4,
+      "IMAGE"
+    ],
+    [
+      9,
+      102,
+      0,
+      8,
+      5,
+      "IMAGE"
+    ],
+    [
+      10,
+      103,
+      0,
+      8,
+      6,
+      "IMAGE"
+    ],
+    [
+      11,
+      104,
+      0,
+      8,
+      7,
+      "IMAGE"
+    ],
+    [
+      12,
+      105,
+      0,
+      8,
+      8,
+      "IMAGE"
+    ],
+    [
+      13,
+      106,
+      0,
+      8,
+      9,
+      "IMAGE"
+    ],
+    [
+      14,
+      107,
+      0,
+      8,
+      10,
+      "IMAGE"
+    ],
+    [
+      15,
+      108,
+      0,
+      8,
+      11,
+      "IMAGE"
+    ],
+    [
+      16,
+      8,
+      0,
+      10,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      17,
+      4,
+      0,
+      10,
+      0,
+      "MODEL"
+    ],
+    [
+      19,
+      4,
+      0,
+      12,
+      0,
+      "MODEL"
+    ],
+    [
+      20,
+      13,
+      0,
+      14,
+      0,
+      "NOISE"
+    ],
+    [
+      21,
+      10,
+      0,
+      14,
+      1,
+      "GUIDER"
+    ],
+    [
+      22,
+      11,
+      0,
+      14,
+      2,
+      "SAMPLER"
+    ],
+    [
+      23,
+      12,
+      0,
+      14,
+      3,
+      "SIGMAS"
+    ],
+    [
+      24,
+      8,
+      1,
+      14,
+      4,
+      "LATENT"
+    ],
+    [
+      25,
+      14,
+      0,
+      15,
+      0,
+      "LATENT"
+    ],
+    [
+      26,
+      6,
+      0,
+      15,
+      1,
+      "VAE"
+    ],
+    [
+      27,
+      14,
+      0,
+      16,
+      0,
+      "LATENT"
+    ],
+    [
+      28,
+      7,
+      0,
+      16,
+      1,
+      "VAE"
+    ],
+    [
+      29,
+      15,
+      0,
+      17,
+      0,
+      "IMAGE"
+    ],
+    [
+      30,
+      16,
+      0,
+      17,
+      1,
+      "AUDIO"
+    ],
+    [
+      31,
+      17,
+      0,
+      18,
+      0,
+      "VIDEO"
+    ],
+    [
+      32,
+      109,
+      0,
+      8,
+      12,
+      "IMAGE"
+    ],
+    [
+      33,
+      109,
+      2,
+      8,
+      13,
+      "AUDIO"
+    ],
+    [
+      34,
+      110,
+      0,
+      8,
+      14,
+      "AUDIO"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "1 — Models and exact tutorial optimizations",
+      "bounding": [
+        0,
+        -20,
+        1370,
+        210
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "2 — Nine-image reference bank",
+      "bounding": [
+        320,
+        220,
+        1020,
+        810
+      ],
+      "color": "#5b8f57",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "3 — Ref2VA conditioning and sampling",
+      "bounding": [
+        1370,
+        120,
+        1620,
+        760
+      ],
+      "color": "#8f6b45",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "4 — Native video + audio output",
+      "bounding": [
+        3010,
+        190,
+        1060,
+        430
+      ],
+      "color": "#865d8f",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "version": 0.4,
+  "revision": 1
+}

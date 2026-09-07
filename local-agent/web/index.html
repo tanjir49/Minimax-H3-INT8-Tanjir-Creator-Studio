@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Local AI Workbench</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="metrics.css?v=1"><link rel="stylesheet" href="engine-toggle.css?v=1"></head>
+<body>
+  <aside><div class="brand"><i>✦</i><span><b>Local AI</b><small>Private Workbench</small></span></div><button id="new-chat">＋ New chat</button><div class="scope"><b>Full local workspace</b><small>Studio · ComfyUI · Code · Files</small></div><footer><span id="engine-dot"></span><span id="engine-label">Checking engine…</span><button id="engine-toggle" type="button">Qwen OFF</button></footer></aside>
+  <main>
+    <header><div><b>How can I help?</b><small>Qwen 3.5 · Runs on this PC</small></div><div id="resource-monitor" class="resource-monitor"><section data-kind="cpu"><span>CPU <b>0%</b></span><svg viewBox="0 0 100 24" preserveAspectRatio="none"><polyline points="0,24 100,24"/></svg></section><section data-kind="ram"><span>RAM <b>0%</b></span><svg viewBox="0 0 100 24" preserveAspectRatio="none"><polyline points="0,24 100,24"/></svg></section><section data-kind="gpu"><span>GPU <b>0%</b></span><svg viewBox="0 0 100 24" preserveAspectRatio="none"><polyline points="0,24 100,24"/></svg></section><section data-kind="vram"><span>VRAM <b>0%</b></span><svg viewBox="0 0 100 24" preserveAspectRatio="none"><polyline points="0,24 100,24"/></svg></section></div><span>Private & local</span></header>
+    <section id="chat"><div class="welcome"><div>✦</div><h1>Local AI Workbench</h1><p>Ask me to inspect or update the Studio, work with ComfyUI, edit code, organize files, or solve technical tasks.</p><div class="suggestions"><button>Check why the Studio is offline</button><button>Inspect the current website code</button><button>Organize The Lost Envoy project files</button></div></div></section>
+    <form id="composer"><textarea id="prompt" rows="1" placeholder="Message your local AI…"></textarea><button id="send" type="submit">➤</button><small>Destructive actions require your explicit approval.</small></form>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

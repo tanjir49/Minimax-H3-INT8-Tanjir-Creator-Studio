@@ -1,0 +1,28 @@
+.workspace-title-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.uploads-page-button {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border: 1px solid #9b7437;
+  border-radius: 9px;
+  color: #171109;
+  background: linear-gradient(#f2c56d, #da9931);
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.uploads-page-button:hover { filter: brightness(1.06); }
+.uploads-page-button.busy { pointer-events: none; opacity: .62; }
+.uploads-page-button input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+
+@media (max-width: 650px) {
+  .workspace-title-actions { gap: 5px; }
+  .uploads-page-button { padding: 8px 10px; }
+}

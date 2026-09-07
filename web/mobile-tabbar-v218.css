@@ -1,0 +1,30 @@
+@media (max-width:760px){
+  .app-shell{grid-template:58px 50px minmax(0,1fr)/minmax(0,1fr)}
+  .topbar{grid-row:1/3;grid-template-rows:58px 50px}
+  .mode-tabs{
+    display:grid;
+    grid-template-columns:repeat(6,minmax(0,1fr));
+    grid-auto-rows:42px;
+    width:100%;
+    max-width:100%;
+    gap:1px;
+    overflow:hidden;
+  }
+  .mode{
+    display:grid;
+    place-items:center;
+    width:100%;
+    min-width:0;
+    padding:5px 1px;
+    overflow:hidden;
+    font-size:clamp(8px,2.35vw,10px);
+    line-height:1.05;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .sidebar{top:108px}
+  .sidebar-backdrop{inset:108px 0 0}
+  .workspace{grid-row:3}
+  .video-subtabs-v185{top:108px}
+  .filter-menu{top:157px}
+}

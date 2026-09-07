@@ -1,0 +1,66 @@
+{
+  "name": "cinema-consistency-profile",
+  "nodes": {
+    "90": {
+      "class_type": "MiniMaxH3MemoryEfficientSageAttentionPatch",
+      "inputs": {
+        "model": [
+          "4",
+          0
+        ]
+      }
+    },
+    "110": {
+      "class_type": "ImageScale",
+      "inputs": {
+        "image": [
+          "15",
+          0
+        ],
+        "upscale_method": "lanczos",
+        "width": 1920,
+        "height": 1080,
+        "crop": "disabled"
+      }
+    },
+    "111": {
+      "class_type": "CreateVideo",
+      "inputs": {
+        "images": [
+          "110",
+          0
+        ],
+        "audio": [
+          "16",
+          0
+        ],
+        "fps": 24,
+        "bit_depth": 8,
+        "color_space": "sRGB"
+      }
+    },
+    "112": {
+      "class_type": "SaveVideo",
+      "inputs": {
+        "video": [
+          "111",
+          0
+        ],
+        "filename_prefix": "Cinema_Consistency_PDD8_1080p",
+        "format": "mp4",
+        "codec": "h264"
+      }
+    }
+  },
+  "inputs": {
+    "19": {
+      "model": [
+        "90",
+        0
+      ]
+    },
+    "13": {
+      "noise_seed": 490701
+    }
+  }
+}

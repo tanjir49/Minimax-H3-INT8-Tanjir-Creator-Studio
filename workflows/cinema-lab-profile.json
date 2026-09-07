@@ -1,0 +1,107 @@
+{
+  "name": "cinema-lab-profile",
+  "nodes": {
+    "90": {
+      "class_type": "MiniMaxH3MemoryEfficientSageAttentionPatch",
+      "inputs": {
+        "model": [
+          "4",
+          0
+        ]
+      }
+    },
+    "110": {
+      "class_type": "ImageScale",
+      "inputs": {
+        "image": [
+          "113",
+          0
+        ],
+        "upscale_method": "lanczos",
+        "width": 1920,
+        "height": 1080,
+        "crop": "disabled"
+      }
+    },
+    "111": {
+      "class_type": "CreateVideo",
+      "inputs": {
+        "images": [
+          "110",
+          0
+        ],
+        "audio": [
+          "114",
+          0
+        ],
+        "fps": 24,
+        "bit_depth": 8,
+        "color_space": "sRGB"
+      }
+    },
+    "112": {
+      "class_type": "SaveVideo",
+      "inputs": {
+        "video": [
+          "17",
+          0
+        ],
+        "filename_prefix": "Studio/Cinema_Lab",
+        "format": "mp4",
+        "codec": "h264"
+      }
+    },
+    "113": {
+      "class_type": "ImageFromBatch",
+      "inputs": {
+        "image": [
+          "15",
+          0
+        ],
+        "batch_index": 0,
+        "length": 72
+      }
+    },
+    "114": {
+      "class_type": "TrimAudioDuration",
+      "inputs": {
+        "audio": [
+          "16",
+          0
+        ],
+        "start_index": 0.0,
+        "duration": 3.0
+      }
+    }
+  },
+  "inputs": {
+    "19": {
+      "model": [
+        "90",
+        0
+      ]
+    },
+    "13": {
+      "noise_seed": 490701
+    },
+    "17": {
+      "images": [
+        "113",
+        0
+      ],
+      "audio": [
+        "114",
+        0
+      ]
+    },
+    "18": {
+      "video": [
+        "111",
+        0
+      ]
+    },
+    "8": {
+      "ref_image_size": "match"
+    }
+  }
+}

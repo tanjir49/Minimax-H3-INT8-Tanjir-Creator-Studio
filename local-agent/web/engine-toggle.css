@@ -1,0 +1,3 @@
+aside footer{flex-wrap:wrap}
+#engine-toggle{width:100%;margin-top:7px;padding:8px 10px;border:1px solid #444b53;border-radius:9px;color:#b8c0ca;background:#171b1f;cursor:pointer}
+#engine-toggle.on{border-color:#327d4b;color:#78e39a;background:#132219}

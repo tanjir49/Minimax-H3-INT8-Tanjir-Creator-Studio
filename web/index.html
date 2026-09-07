@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b0d0f"><title>Tanjir Creator Studio</title>
+  <link rel="stylesheet" href="styles.css?v=213"><link rel="stylesheet" href="director-v188.css?v=199"><link rel="stylesheet" href="director-metrics-v190.css?v=199"><link rel="stylesheet" href="project-menu-v191.css?v=199"><link rel="stylesheet" href="qwen-toggle-v193.css?v=199"><link rel="stylesheet" href="team-access-v195.css?v=199"><link rel="stylesheet" href="team-access-v197.css?v=199"><link rel="stylesheet" href="uploads-page-v199.css?v=199">
+</head>
+<body>
+  <div id="auth" class="auth-screen">
+    <form id="auth-form" class="auth-card" method="post" action="/api/login" onsubmit="return false">
+      <div class="auth-mark">TC</div><p class="eyebrow">PRIVATE CREATIVE WORKSPACE</p>
+      <h1>Tanjir Creator Studio</h1><p id="auth-copy">Sign in with the username provided by your administrator.</p>
+      <label>Username<input id="username" name="username" autocomplete="username" required minlength="3" maxlength="32"></label>
+      <label>Password<input id="password" name="password" type="password" autocomplete="current-password" required minlength="10"></label>
+      <label id="remember-wrap" class="remember-login"><input id="remember-login" type="checkbox" checked><span><b>Remember me</b><small>Keep me signed in on this device</small></span></label>
+      <label id="bootstrap-wrap" hidden>Setup code<input id="bootstrap-token" autocomplete="one-time-code"></label>
+      <button id="auth-submit" class="primary" type="submit">Sign in</button><p id="auth-error" class="form-error"></p>
+    </form>
+  </div>
+
+  <div id="studio" class="app-shell" hidden>
+    <header class="topbar">
+      <button id="menu-toggle" class="icon-button" type="button" aria-label="Open navigation" aria-expanded="false">☰</button><a class="brand" href="#">Tanjir Creator Studio</a>
+      <nav class="mode-tabs" aria-label="Creation modes"><button class="mode active" data-mode="image">Image</button><button class="mode" data-mode="video">Video</button><button class="mode" data-mode="upscale">Upscale</button><button class="mode" data-mode="edit">Video Edit</button><button class="mode" data-mode="cinema">Cinema</button><button class="mode" data-mode="tts">Voice</button><button class="mode" data-mode="music">Music</button></nav>
+      <div id="resource-monitor" class="resource-monitor" title="Live system usage">
+        <div class="resource-row"><span>CPU</span><i><u id="cpu-meter"></u></i><b id="cpu-value">--%</b></div>
+        <div class="resource-row"><span>GPU</span><i><u id="gpu-meter"></u></i><b id="gpu-value">--%</b></div>
+        <div class="resource-row"><span>RAM</span><i><u id="ram-meter"></u></i><b id="ram-value">--%</b></div>
+      </div>
+      <button id="comfy-status" class="status"><span class="status-dot"></span><span>Checking Studio</span></button>
+      <div class="account-wrap">
+        <button id="account" class="avatar" type="button" aria-label="Open account menu" aria-expanded="false">TA</button>
+        <div id="account-menu" class="account-menu" hidden>
+          <header><b id="account-name">Account</b><small id="account-role">member</small></header>
+          <button id="change-password" type="button">🔑 Change password</button>
+          <button id="manage-users" type="button" hidden>⚙ Manage users</button>
+          <button id="logout" class="account-logout" type="button">↪ Sign out</button>
+        </div>
+      </div>
+    </header>
+    <aside class="sidebar">
+      <nav class="side-nav"><a id="nav-home" class="active" href="#" data-gallery-view="generations">⌂ <span>Home</span></a><a id="nav-generations" href="#" data-gallery-view="generations">▱ <span>My Generations</span></a><a id="nav-favorites" href="#" data-gallery-view="favorites">♥ <span>Favorites</span></a><a id="nav-elements" href="#">◉ <span>My Elements</span></a><a id="nav-public" href="#" data-gallery-view="public"><svg class="nav-eye-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.75"/></svg><span>Public Gallery</span></a><a id="nav-uploads" href="#" data-gallery-view="uploads">▰ <span>Uploads</span></a></nav>
+      <div class="sidebar-heading"><span>Projects</span><button id="new-project" aria-label="New project">＋</button></div>
+      <div id="project-list" class="project-list"></div>
+      <button id="director" class="director" hidden>✦ <span><b>Director</b><small>Admin only</small></span><em>🔒</em></button>
+    </aside>
+    <button id="sidebar-backdrop" class="sidebar-backdrop" type="button" aria-label="Close navigation" hidden></button>
+    <main class="workspace">
+      <div class="workspace-title"><div><p>PROJECT</p><h1 id="project-title">Select a project</h1></div><div class="workspace-title-actions"><label id="uploads-page-button" class="uploads-page-button" hidden>＋ Upload files<input id="uploads-page-input" type="file" accept="image/*,video/*,audio/*" multiple></label><div class="filter-wrap"><button id="filter-toggle" class="filter" type="button" aria-expanded="false">Filter</button><div id="filter-menu" class="filter-menu" hidden><section><b>Media type</b><div class="filter-options"><button class="active" type="button" data-kind="all">All</button><button type="button" data-kind="image">Images</button><button type="button" data-kind="video">Videos</button></div></section><section><b>Sort by</b><div class="filter-options"><button class="active" type="button" data-sort="newest">Newest</button><button type="button" data-sort="oldest">Oldest</button></div></section><button id="filter-reset" class="filter-reset" type="button">Reset filters</button></div></div></div></div>
+      <section id="job-strip" class="job-strip" hidden></section>
+      <section id="gallery" class="gallery"><div class="empty-gallery"><b>No generations yet</b><span>Upload a reference or create your first image.</span></div></section>
+      <section id="cinema-panel" class="cinema-panel" hidden aria-label="Cinema workspace">
+        <header class="cinema-head"><div><p class="eyebrow">OPTIONAL FILM DIRECTION</p><h2>Cinema workspace</h2><small>Every field is optional. Shot settings override global settings.</small></div><div class="cinema-preset-row"><select id="cinema-preset" aria-label="Film preset"><option value="clean">Clean slate</option><option value="cinematic">Modern cinematic</option><option value="1960s">1960s film</option><option value="noir">Noir</option></select><button id="cinema-save-preset" type="button">Save preset</button><button id="cinema-reset" type="button">Reset</button></div></header>
+        <div class="cinema-mode-tabs" role="tablist"><button class="active" data-cinema-mode="single" type="button">Single shot</button><button data-cinema-mode="auto" type="button">Auto multishot</button><button data-cinema-mode="custom" type="button">Custom multishot</button></div>
+        <div class="cinema-global-grid"><label>Genre<select id="cinema-genre"><option value="">Auto / not set</option><option>Drama</option><option>Action</option><option>Thriller</option><option>Comedy</option><option>Documentary</option><option>Fantasy</option><option>Sci-fi</option><option>Horror</option></select></label><label>Era<select id="cinema-era"><option value="">Auto / not set</option><option>1920s</option><option>1940s</option><option>1960s</option><option>1980s</option><option>1990s</option><option>Contemporary</option><option>Futuristic</option></select></label><label>Pacing<select id="cinema-pacing"><option value="">Auto / not set</option><option>Chaotic</option><option>Dynamic</option><option>Calm</option></select></label><label>Tempo<select id="cinema-tempo"><option value="">Auto / not set</option><option>Still</option><option>Slow</option><option>Natural</option><option>Energetic</option><option>Rapid</option></select></label><label>Camera<select id="cinema-camera"><option value="">Auto / not set</option><option>Static</option><option>Pan left</option><option>Pan right</option><option>Tilt up</option><option>Tilt down</option><option>Push in</option><option>Pull back</option><option>Dolly</option><option>Truck</option><option>Orbit</option><option>Crane</option><option>Handheld</option><option>Tracking shot</option></select></label><label>Lens<select id="cinema-lens"><option value="">Auto / not set</option><option>14mm ultra-wide</option><option>24mm wide</option><option>35mm</option><option>50mm</option><option>85mm portrait</option><option>135mm telephoto</option><option>Anamorphic</option></select></label><label>Lighting<select id="cinema-lighting"><option value="">Auto / not set</option><option>Natural daylight</option><option>Golden hour</option><option>Soft studio</option><option>High-key</option><option>Low-key</option><option>Neon</option><option>Chiaroscuro</option><option>Moonlight</option></select></label><label>Color palette<input id="cinema-palette" placeholder="Auto or describe colors"></label><label class="cinema-direction">Custom direction<input id="cinema-direction" placeholder="Any additional film direction"></label></div>
+        <div class="cinema-shot-toolbar"><div><b>Shot plan</b><span id="cinema-shot-summary">1 shot</span></div><div><button id="cinema-auto-plan" type="button">✦ Build auto plan</button><button id="cinema-add-shot" type="button">＋ Add shot</button></div></div><div id="cinema-shot-list" class="cinema-shot-list"></div>
+      </section>
+      <section class="composer" aria-label="Generation controls">
+        <div class="composer-surface">
+<section id="video-edit-panel" class="video-edit-panel" hidden aria-label="MiniMax video editing controls">
+        <header><div><p class="eyebrow">MINIMAX H3 · TRACKED VIDEO EDIT</p><h2>Edit one object or subject</h2><small>SAM3 tracks the target through every frame; MiniMax changes only that masked area.</small></div><div class="video-edit-head-actions"><button id="video-edit-collapse" type="button">Collapse</button><button id="video-edit-draw" class="primary" type="button">✎ Draw target</button><span>Original audio preserved</span></div></header>
+        <div class="video-edit-grid">
+          <label>Edit action<select id="video-edit-operation"><option value="remove">Remove object / subject</option><option value="replace">Replace object / subject</option><option value="change">Change appearance</option><option value="move">Move / reposition</option></select></label>
+          <label class="video-edit-target">Target to track<input id="video-edit-target" maxlength="160" placeholder="Example: the drinking glass on the table"></label>
+          <label>Tracking accuracy<select id="video-edit-threshold"><option value="0.35">Broader</option><option value="0.45" selected>Balanced</option><option value="0.58">Precise</option></select></label>
+          <label>Edge protection<select id="video-edit-expand"><option value="3">Tight</option><option value="6" selected>Balanced</option><option value="10">Wide</option></select></label>
+        </div>
+        <div class="video-edit-note"><b>How to use</b><span>Choose the source video below. For Replace or Change, describe the new result in the main prompt and optionally add replacement reference images. Remove can run with only a target description.</span><label><input id="video-edit-preserve-audio" type="checkbox" checked> Keep the source video's exact original audio</label></div>
+      </section>
+        <div id="character-dock" class="character-dock creation-only" hidden><button id="character-director-trigger" type="button"><i>◎</i><span><small>Characters</small><b id="character-summary">Auto</b></span></button></div>
+        <div id="prompt-mention-strip" class="prompt-mention-strip creation-only" hidden aria-label="Selected prompt references"></div>
+        <div id="cinema-dock" class="cinema-dock" hidden><button type="button" data-cinema-picker="film"><i>▣</i><span><small>Film setup</small><b id="cinema-film-summary">Auto</b></span></button><button type="button" data-cinema-picker="camera"><i>◉</i><span><small>Camera</small><b id="cinema-camera-summary">Auto</b></span></button><button type="button" data-cinema-picker="palette"><i>▤</i><span><small>Color palette</small><b id="cinema-palette-summary">Auto</b></span></button><button type="button" data-cinema-picker="lighting"><i>▰</i><span><small>Lighting</small><b id="cinema-lighting-summary">Auto</b></span></button><button type="button" data-cinema-picker="shots"><i>▦</i><span><small>Shots</small><b id="cinema-shots-summary">Single</b></span></button></div><div id="tts-dialogue-heading" class="tts-dialogue-heading" hidden><b>Spoken dialogue</b><small>Only write the exact words the voice should say. Do not add scene, camera or character directions here.</small></div><div id="prompt-editor" class="prompt-editor" contenteditable="true" role="textbox" aria-multiline="true" data-placeholder="Describe the scene you imagine…"></div>
+<section id="cinema-applied-directions" class="cinema-applied-directions" hidden>
+          <header><div><b>Applied Cinema Directions</b><small id="cinema-directions-status">Read only · these exact directions are sent once</small></div><div><button id="cinema-directions-edit" type="button">Edit</button><button id="cinema-directions-reset" type="button" hidden>Reset</button><button id="cinema-directions-done" class="primary" type="button" hidden>Done</button></div></header>
+          <textarea id="cinema-directions-text" readonly aria-label="Applied Cinema Directions" placeholder="Select Cinema features to see their backend directions here."></textarea>
+        </section>
+
+        <section id="tts-panel" class="tts-panel" hidden><header><div><p class="eyebrow">LOCAL INDICF5 TTS</p><h2>Bangla &amp; English voice</h2><small>Upload a clean WAV sample and type its exact spoken transcript to clone the voice.</small></div></header><div class="tts-grid"><label class="tts-reference-card">Reference voice (WAV)<input id="tts-reference-audio" type="file" accept="audio/wav,.wav"><audio id="tts-reference-preview" controls hidden></audio></label><label>Reference transcript <small>Type only the exact words heard in the reference audio.</small><textarea id="tts-reference-text" rows="3" minlength="3" maxlength="1200" required placeholder="Example: Today the sky looks beautiful."></textarea><span id="tts-transcript-error" class="tts-field-error" aria-live="polite"></span></label><label>Voice speed<select id="tts-speed"><option value="0.85">Cinematic slow</option><option value="1" selected>Natural</option><option value="1.15">Faster</option></select></label></div></section><section id="music-panel" class="tts-panel music-panel" hidden><header><div><p class="eyebrow">LOCAL ACE-STEP 1.5</p><h2>Music generator</h2><small>Describe the style above, then add optional lyrics and song controls.</small></div></header><div class="tts-grid"><label>Lyrics <small>Leave empty for automatic lyrics, or choose Instrumental.</small><textarea id="music-lyrics" rows="5" maxlength="8000" placeholder="[Verse]\nWrite lyrics here..."></textarea></label><label class="music-options">Song controls<select id="music-language"><option value="">Auto language</option><option value="en">English</option><option value="unknown">No language</option></select><input id="music-bpm" type="number" min="0" max="300" value="0" placeholder="BPM · 0 = Auto"><input id="music-key" maxlength="32" placeholder="Key · e.g. C major"><span><input id="music-instrumental" type="checkbox"> Instrumental only</span></label></div></section><textarea id="prompt" hidden aria-hidden="true"></textarea>
+        <div id="media-row" class="media-row">
+          <label class="upload-card video-only" hidden><span>Start Frame</span><small>Optional image</small><input id="start-frame" type="file" accept="image/*"><b id="start-frame-mark">+</b></label>
+          <label class="upload-card video-only minimax-only" hidden><span>End Frame</span><small>Optional image</small><input id="end-frame" type="file" accept="image/*"><b id="end-frame-mark">+</b></label>
+          <div class="upload-card reference-card creation-only"><span>Image References</span><small>Optional · up to 9</small><b id="reference-count">0 / 9</b><div id="reference-thumbs" class="reference-thumbs"><label class="reference-add">+<input id="reference-input" type="file" accept="image/*" multiple></label></div></div>
+          <div class="upload-card reference-card video-only minimax-only" hidden><span>Video References</span><small>Optional · up to 2</small><b id="video-reference-count">0 / 2</b><div id="video-reference-thumbs" class="reference-thumbs"><label class="reference-add">+<input id="video-reference-input" type="file" accept="video/*" multiple></label></div></div>
+          <div class="upload-card reference-card video-only minimax-only" hidden><span>Audio References</span><small>Optional · up to 2</small><b id="audio-reference-count">0 / 2</b><div id="audio-reference-thumbs" class="reference-thumbs"><label class="reference-add">+<input id="audio-reference-input" type="file" accept="audio/*" multiple></label></div></div>
+          <div class="upload-card reference-card video-only minimax-only" hidden><span>Video + Audio</span><small>Optional · up to 2</small><b id="video-audio-reference-count">0 / 2</b><div id="video-audio-reference-thumbs" class="reference-thumbs"><label class="reference-add">+<input id="video-audio-reference-input" type="file" accept="video/*" multiple></label></div></div>
+          <label class="upload-card source-media-only" hidden><span>Source Media</span><small>Image or video</small><input id="source-media" type="file" accept="image/*,video/*"><b id="source-media-mark" hidden>+</b></label>
+        </div>
+        <div class="control-row">
+          <label id="quick-upload-trigger" class="mention-trigger quick-upload-trigger creation-only" aria-label="Upload image, video or audio" title="Upload image, video or audio">+<input id="quick-upload-input" type="file" accept="image/*,video/*,audio/*" multiple></label><button id="mention-trigger" class="mention-trigger creation-only" type="button" aria-label="Mention gallery images" title="Mention gallery images">@</button><button id="references-toggle" class="references-toggle" type="button" aria-expanded="false" aria-controls="media-row" title="Show or hide references">▣ <span>Media & refs</span><b id="references-summary">0</b></button>
+          <label>Model<select id="model"><option value="flux-image">Flux Image</option></select></label>
+          <label id="ratio-wrap">Ratio<select id="ratio"><option>16:9</option><option>9:16</option><option>1:1</option><option>4:3</option><option>3:4</option><option>21:9</option></select></label>
+          <label id="resolution-wrap">Resolution<select id="resolution"><option>1080p</option><option>720p</option><option>480p</option><option>360p</option><option>240p</option></select></label>
+          <label id="duration-wrap" hidden>Duration<select id="duration"></select></label>
+          <button id="generate" class="generate">✦ Generate</button>
+        </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="video-mask-dialog" class="video-mask-dialog"><div class="video-mask-card"><header><div><p class="eyebrow">TARGETED VIDEO EDIT</p><h2>Mark the target and the destination</h2><small>Paint the object in red. If it should move or appear elsewhere, paint that area in blue.</small></div><button id="video-mask-close" type="button">×</button></header><div class="video-mask-layout"><div class="video-mask-stage"><video id="video-mask-source" controls muted playsinline></video><canvas id="video-mask-canvas"></canvas><div class="mask-legend"><span><i class="target"></i>Target</span><span><i class="destination"></i>Destination</span></div></div><aside class="video-mask-instruction"><label>Edit action<select id="video-mask-operation"><option value="remove">Remove object / subject</option><option value="replace">Replace object / subject</option><option value="change">Change appearance</option><option value="move">Move / reposition</option></select></label><label>What should happen?<textarea id="video-mask-prompt" rows="5" placeholder="Example: Move this glass to the marked blue area, keeping its exact shape and reflections."></textarea></label><div class="mask-help"><b>Easy workflow</b><ol><li>Pause on a clear frame.</li><li>Paint the object red.</li><li>Optional: paint its destination blue.</li><li>Write the requested change and apply.</li></ol></div></aside></div><footer><label>Brush <input id="video-mask-size" type="range" min="4" max="100" value="28"></label><button id="video-mask-brush" class="active" type="button">● Target</button><button id="video-mask-place" type="button">● Destination</button><button id="video-mask-erase" type="button">Eraser</button><button id="video-mask-clear" type="button">Clear all</button><span id="video-mask-status">Paint the target in red</span><button id="video-mask-apply" class="primary" type="button">Apply edit setup</button></footer></div></dialog><dialog id="character-dialog" class="character-dialog"><div class="character-dialog-card"><header><div><p class="eyebrow">SCENE LIBRARY</p><h2>Characters, Elements &amp; Props</h2><small>Build reusable identities, objects and scene elements with exact image references.</small></div><button id="close-character-dialog" type="button" aria-label="Close">×</button></header><nav class="character-tabs"><button class="active" type="button" data-character-tab="library">Characters</button><button type="button" data-character-tab="elements">Elements &amp; Props</button><button type="button" data-character-tab="scene">This Scene</button><button type="button" data-character-tab="references">Assign References</button></nav><div id="character-dialog-body" class="character-dialog-body"></div><footer><span id="character-dialog-status">Project character identities</span><button id="new-character" class="primary" type="button">＋ Create character</button></footer></div></dialog>
+  <dialog id="mention-dialog" class="mention-dialog"><div class="mention-dialog-card"><header><div><p class="eyebrow">IMAGE MENTIONS</p><h2>Mention characters or images</h2><small>Select saved characters, uploaded images, or generated images for the prompt.</small></div><button id="close-mention" type="button" aria-label="Close">×</button></header><div class="mention-gallery-toolbar"><div class="mention-gallery-tabs"><button class="active" type="button" data-mention-view="characters">Characters &amp; Props <b id="mention-character-count">0</b></button><button type="button" data-mention-view="uploads">Uploads <b id="mention-upload-count">0</b></button><button type="button" data-mention-view="generated">Generated <b id="mention-generated-count">0</b></button></div><label class="mention-upload-now">＋ Upload image<input id="mention-upload-input" type="file" accept="image/*" multiple></label></div><div id="mention-grid" class="mention-grid"></div><footer><span id="mention-selection-count">0 selected</span><button id="cancel-mention" type="button">Cancel</button><button id="apply-mentions" class="primary" type="button">Add mentions</button></footer></div></dialog>
+  <dialog id="cinema-picker-dialog" class="cinema-picker-dialog"><div class="cinema-picker-card"><header><div><p class="eyebrow">CINEMA DIRECTION</p><h2 id="cinema-picker-title">Film setup</h2><small id="cinema-picker-help">Choose a visual preset or leave everything on Auto.</small></div><div><button id="cinema-picker-reset" type="button">Reset</button><button id="cinema-picker-close" type="button" aria-label="Close">×</button></div></header><div id="cinema-picker-body" class="cinema-picker-body"></div><footer><button id="cinema-picker-custom" type="button">Save custom preset</button><button id="cinema-picker-done" class="primary" type="button">Done</button></footer></div></dialog>
+  <dialog id="asset-dialog" class="asset-dialog"><div class="asset-dialog-card"><header><div><p class="eyebrow">PROJECT ASSET</p><h2 id="asset-dialog-title">Preview</h2></div><button id="close-asset" type="button">×</button></header><div id="asset-preview" class="asset-preview"></div><footer><button id="recreate-asset" class="primary" type="button" hidden>↻ Recreate</button><button id="prequel-asset" class="primary" type="button" hidden>← Add before</button><button id="continue-asset" class="primary" type="button" hidden>→ Continue after</button><button id="upscale-asset" class="primary" type="button" hidden>◇ Upscale</button><button id="edit-video-asset" class="primary" type="button" hidden>✎ Edit video</button><button id="publish-asset" class="primary publish-control" type="button" hidden>↑ Publish</button><button id="use-reference" class="primary" type="button">Use as reference</button><a id="download-asset" class="primary" download>Download</a><button id="delete-asset" class="danger" type="button">Delete</button></footer></div></dialog>
+  <dialog id="users-dialog"><div class="dialog-card"><header><div><p class="eyebrow">ADMIN</p><h2>Team access</h2></div><button id="close-users" type="button">×</button></header><form id="add-user-form" class="inline-form"><input id="new-username" placeholder="Username" required><input id="new-password" type="password" placeholder="Temporary password" required minlength="10"><button class="primary" type="submit">Create user</button></form><div id="user-list" class="user-list"></div></div></dialog>
+  <dialog id="password-dialog"><div class="dialog-card"><header><div><p class="eyebrow">ACCOUNT SECURITY</p><h2>Change password</h2></div><button id="close-password" type="button">×</button></header><form id="password-form" class="password-form"><label>Current password<input id="current-password" type="password" autocomplete="current-password" required></label><label>New password<input id="account-new-password" type="password" autocomplete="new-password" minlength="10" required></label><label>Confirm new password<input id="confirm-password" type="password" autocomplete="new-password" minlength="10" required></label><p id="password-error" class="form-error"></p><button class="primary" type="submit">Update password</button></form></div></dialog>
+  <dialog id="director-dialog" class="director-dialog"><div class="director-dialog-card"><header><div><p class="eyebrow">PRIVATE LOCAL AI</p><h2>AI Cinema Director</h2><small id="director-project-name">General workspace</small><div class="director-workspace-tools-v201"><label>Work in project<select id="director-project-select"><option value="">General · Quick Creations</option></select></label><button id="director-new-chat" type="button">＋ New chat</button><button id="director-history-toggle" type="button">☰ History</button></div></div><div class="director-status"><i></i><span>Admin only · Local Qwen 3.5</span><button id="director-engine-toggle" type="button">Qwen OFF</button><b id="director-token-status" title="Current conversation context usage">Tokens: ready / 8,192</b><button id="close-director" type="button">×</button></div></header><aside id="director-history-panel" class="director-history-panel-v201" hidden><header><b>Chat history</b><button id="director-history-close" type="button">×</button></header><div id="director-history-list"></div></aside><div id="director-chat" class="director-chat"><div class="director-welcome"><b>✦ Your production director is ready</b><span>Create standalone media, or choose a project above for its characters, assets and continuity.</span><small>General requests are saved under Quick Creations.</small></div></div><form id="director-form"><textarea id="director-prompt" rows="2" placeholder="Ask for an image, video, scene or complete production plan…" required></textarea><small id="director-message-tokens">Message: ~0 tokens · Enter to send · Alt+Enter for new line</small><button id="director-send" class="primary" type="submit">Send ➤</button></form></div></dialog>
+  <link rel="stylesheet" href="director-workspace-v201.css?v=214"><link rel="stylesheet" href="media-mentions-v203.css?v=214"><link rel="stylesheet" href="mobile-responsive-v214.css?v=214"><script src="app.js?v=213"></script><script src="team-access-v197.js?v=210"></script><script src="video-edit.js?v=157"></script><script src="compact-composer.js?v=162"></script><script src="reference-manager.js?v=161"></script><script src="unified-mentions.js?v=164"></script><script src="scene-library.js?v=164"></script><script src="uploads-page-v199.js?v=213"></script><script src="upload-progress-v203.js?v=210"></script><script src="director-workspace-v201.js?v=210"></script><script src="media-mentions-v204.js?v=210"></script><script src="persistent-reference-uploads-v205.js?v=210"></script>
+  <script src="mention-backspace-v215.js?v=215"></script>
+  <script src="mention-backspace-v217.js?v=217"></script>
+<link rel="stylesheet" href="cinema-mobile-v219.css?v=219"><link rel="stylesheet" href="music-v221.css?v=222"><script src="music-v221.js?v=222"></script>
+  <link rel="stylesheet" href="video-subtabs-mobile-v220.css?v=220">
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

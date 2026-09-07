@@ -1,0 +1,86 @@
+/* Phone layout loaded last so later desktop/tablet rules cannot displace it. */
+@media (max-width: 760px) {
+  html, body { width: 100%; max-width: 100%; overflow: hidden; }
+  .app-shell { min-width: 0; width: 100%; max-width: 100vw; height: 100dvh; }
+
+  .topbar { width: 100%; min-width: 0; padding-inline: 9px; }
+  .brand { min-width: 0; font-size: clamp(15px, 4.7vw, 19px); }
+  .mode-tabs {
+    min-width: 0;
+    overflow-x: auto;
+    justify-content: flex-start;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+  }
+  .mode-tabs::-webkit-scrollbar { display: none; }
+  .mode { flex: 0 0 auto; min-width: 82px; padding-inline: 11px; scroll-snap-align: start; }
+
+  .video-subtabs-v185 { width: 100%; overflow-x: auto; justify-content: flex-start; padding-inline: 8px; scrollbar-width: none; }
+  .video-subtabs-v185::-webkit-scrollbar { display: none; }
+  .video-subtabs-v185 button { flex: 1 0 135px; }
+
+  .workspace {
+    width: 100%;
+    min-width: 0;
+    padding: 11px 8px 285px;
+    overflow-x: hidden;
+  }
+  .workspace-title { gap: 8px; }
+  .workspace-title > div { min-width: 0; }
+  .workspace-title h1 { max-width: calc(100vw - 92px); }
+  .job-strip { width: 100%; }
+  .job { min-width: min(82vw, 300px); }
+  .gallery { width: 100%; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+  .asset { min-width: 0; }
+  .asset footer { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .composer,
+  .workspace.video-edit-active .composer {
+    position: fixed;
+    z-index: 180;
+    left: 6px;
+    right: 6px;
+    bottom: calc(6px + env(safe-area-inset-bottom));
+    width: auto;
+    max-width: none;
+    max-height: min(56dvh, 500px);
+    transform: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  .composer-surface,
+  .workspace.video-edit-active .composer-surface { width: 100%; max-height: none; overflow: visible; }
+  .prompt-editor { min-height: 58px; max-height: 16dvh; font-size: 14px; }
+  .media-row { max-width: 100%; }
+
+  .control-row {
+    display: grid;
+    grid-template-columns: 43px 43px minmax(0, 1fr);
+    gap: 5px;
+    width: 100%;
+    overflow: visible;
+  }
+  .control-row .quick-upload-trigger { grid-column: 1; grid-row: 1; }
+  .control-row #mention-trigger { grid-column: 2; grid-row: 1; }
+  .control-row #references-toggle { grid-column: 3; grid-row: 1; min-width: 0; width: 100%; }
+  .control-row label,
+  .control-row label:first-of-type,
+  .control-row label:has(#model) { min-width: 0; width: 100%; height: 42px; flex: none; }
+  .control-row label:has(#model) { grid-column: 1 / -1; grid-row: 2; }
+  #ratio-wrap { grid-column: 1 / 3; grid-row: 3; }
+  #resolution-wrap { grid-column: 3; grid-row: 3; }
+  #duration-wrap { grid-column: 1 / -1; grid-row: 4; }
+  .control-row select { width: 100%; min-width: 0; }
+  .generate { position: static; grid-column: 1 / -1; min-width: 0; width: 100%; min-height: 44px; margin: 0; }
+
+  dialog { max-width: calc(100vw - 12px); }
+  .mention-dialog-card { padding: 12px; }
+  .mention-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 390px) {
+  .mode { min-width: 76px; }
+  .gallery { gap: 4px; }
+  .workspace { padding-inline: 6px; }
+  .composer { left: 4px; right: 4px; }
+}

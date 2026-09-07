@@ -1,0 +1,14 @@
+@media (max-width:760px){
+  .cinema-dock{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:5px;
+    width:100%;
+    max-width:100%;
+    overflow:visible;
+  }
+  .cinema-dock>button{width:100%;min-width:0;max-width:100%;min-height:48px;flex:none;padding:6px}
+  .cinema-dock>button:last-child:nth-child(odd){grid-column:1/-1}
+  .cinema-dock b{font-size:10px}
+  .cinema-applied-directions,.cinema-applied-directions textarea{width:100%;max-width:100%;overflow-wrap:anywhere}
+}

@@ -1,0 +1,28 @@
+@media (max-width:760px){
+  /* Show every creation mode without a hidden horizontal strip. */
+  .app-shell{grid-template:58px 82px minmax(0,1fr)/minmax(0,1fr)}
+  .topbar{grid-row:1/3;grid-template-rows:58px 82px}
+  .mode-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:36px;gap:3px;overflow:visible}
+  .mode{width:100%;min-width:0;padding:6px 4px;font-size:11px;white-space:nowrap}
+  .sidebar{top:140px}
+  .sidebar-backdrop{inset:140px 0 0}
+  .workspace{grid-row:3}
+  .video-subtabs-v185{top:140px}
+  .video-subtabs-open-v185 .workspace{padding-top:54px}
+  .filter-menu{top:189px}
+
+  /* Cinema controls wrap inside the phone instead of disappearing to the right. */
+  .cinema-dock{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;width:100%;overflow:visible;margin:0 0 6px}
+  .cinema-dock>button{width:100%;min-width:0;min-height:48px;flex:none;padding:6px}
+  .cinema-dock>button:last-child:nth-child(odd){grid-column:1/-1}
+  .cinema-dock i{width:27px;height:27px;flex-basis:27px}
+  .cinema-dock b{font-size:10px}
+  .cinema-applied-directions{max-width:100%;overflow:hidden}
+  .cinema-applied-directions textarea{width:100%;max-width:100%;white-space:pre-wrap;overflow-wrap:anywhere}
+  .composer,.composer-surface,.workspace.cinema-active .composer{max-width:calc(100vw - 12px)}
+}
+
+@media (max-width:360px){
+  .brand{font-size:14px}
+  .mode{font-size:10px}
+}

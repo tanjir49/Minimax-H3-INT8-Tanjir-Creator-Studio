@@ -1,0 +1,17 @@
+.director-dialog-card { position: relative; }
+.director-workspace-tools-v201 { display: flex; align-items: center; gap: 7px; margin-top: 9px; }
+.director-workspace-tools-v201 label { display: flex; align-items: center; gap: 7px; padding: 5px 8px; border: 1px solid #394147; border-radius: 8px; color: #909aa1; background: #111518; font-size: 9px; text-transform: uppercase; letter-spacing: .05em; }
+.director-workspace-tools-v201 select { max-width: 220px; border: 0; color: #e8ecee; background: transparent; font-size: 11px; text-transform: none; outline: 0; }
+.director-workspace-tools-v201 select option { color: #f4f6f7; background: #171b1e; }
+.director-workspace-tools-v201 select option:checked { color: #111518; background: #f0bd58; }
+.director-workspace-tools-v201 button { padding: 7px 10px; border: 1px solid #3b4349; border-radius: 8px; color: #d8dde0; background: #1b2024; font-size: 11px; cursor: pointer; }
+.director-workspace-tools-v201 button:hover { border-color: #9a7339; color: #ffd98c; }
+.director-history-panel-v201 { position: absolute; z-index: 20; top: 118px; left: 16px; width: min(340px, calc(100% - 32px)); max-height: calc(100% - 205px); overflow: hidden; border: 1px solid #434b51; border-radius: 12px; background: #121619f5; box-shadow: 0 18px 55px #000d; backdrop-filter: blur(12px); }
+.director-history-panel-v201>header { display: flex; align-items: center; justify-content: space-between; padding: 11px 12px; border-bottom: 1px solid #30373c; }
+.director-history-panel-v201>header button { border: 0; color: #a7afb5; background: transparent; font-size: 19px; }
+#director-history-list { display: grid; gap: 5px; max-height: 55vh; padding: 8px; overflow-y: auto; }
+#director-history-list button { display: grid; gap: 3px; padding: 9px 10px; border: 1px solid transparent; border-radius: 8px; color: #d9dde0; background: transparent; text-align: left; cursor: pointer; }
+#director-history-list button:hover { border-color: #3d454b; background: #20252a; }
+#director-history-list button small { color: #818b92; font-size: 9px; }
+#director-history-list .empty { padding: 18px; color: #8c969d; text-align: center; }
+@media(max-width:760px){.director-workspace-tools-v201{flex-wrap:wrap}.director-workspace-tools-v201 label{width:100%}.director-workspace-tools-v201 select{max-width:none;flex:1}.director-history-panel-v201{top:170px}}
