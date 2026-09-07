@@ -39,6 +39,22 @@ $packs = [ordered]@{
             @('latent_upscale_models/minimax_h3_latent_upscaler_3d_fp16.safetensors', 'https://huggingface.co/LBH-123-AI/Minimax_h3_latent_Upscaler/resolve/main/minimax_h3_latent_upscaler_3d_fp16.safetensors')
         )
     }
+    '5' = @{
+        Name = 'Original Wan 2.2 I2V 14B core pack'
+        Files = @(
+            @('diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors', 'https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors'),
+            @('diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors', 'https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors'),
+            @('text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors', 'https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors'),
+            @('vae/wan_2.1_vae.safetensors', 'https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors')
+        )
+    }
+    '6' = @{
+        Name = 'Wan 2.2 LightX2V 4-step LoRAs (optional)'
+        Files = @(
+            @('loras/wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors', 'https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors'),
+            @('loras/wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors', 'https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/loras/wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors')
+        )
+    }
 }
 
 Write-Host ''
@@ -50,7 +66,7 @@ Write-Host ''
 foreach ($entry in $packs.GetEnumerator()) {
     Write-Host ("[{0}] {1}" -f $entry.Key, $entry.Value.Name)
 }
-Write-Host '[A] Core pack plus every optional add-on'
+Write-Host '[A] MiniMax core pack plus MiniMax optional add-ons (1-4)'
 $choice = (Read-Host 'Choose a pack').Trim().ToUpperInvariant()
 $selected = if ($choice -eq 'A') { @('1', '2', '3', '4') } elseif ($packs.Contains($choice)) { @($choice) } else { throw 'Invalid selection.' }
 

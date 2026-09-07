@@ -104,13 +104,6 @@ class GenerationService:
 
     def queue(self, payload: dict, assets: dict[str, object], owner_id: str, project_id: str, client_id: str | None = None) -> dict:
         preset = str(payload.get("preset", ""))
-        if preset == "lustify-remix-image":
-            self.object_info = fetch_object_info(self.comfy_url)
-            unets = self.object_info.get("UNETLoader", {}).get("input", {}).get("required", {}).get("unet_name", [[]])[0]
-            vaes = self.object_info.get("VAELoader", {}).get("input", {}).get("required", {}).get("vae_name", [[]])[0]
-            encoders = self.object_info.get("CLIPLoader", {}).get("input", {}).get("required", {}).get("clip_name", [[]])[0]
-            if "lustifyNSFWCheckpoint_v10Krea2.safetensors" not in unets or "qwen_image_vae.safetensors" not in vaes or "qwen3vl_4b_fp8_scaled.safetensors" not in encoders:
-                raise GenerationError("Lustify setup is incomplete. Finish the Qwen3-VL encoder download and install it in models/text_encoders.")
         if preset in {"minimax-h3-edit", "minimax-h3-edit-best"}:
             checkpoints = self.object_info.get("CheckpointLoaderSimple", {}).get("input", {}).get("required", {}).get("ckpt_name", [[]])[0]
             if "sam3.1_multiplex_fp16.safetensors" not in checkpoints:
@@ -132,10 +125,6 @@ class GenerationService:
             prompt = self._flux(payload, assets, owner_id, project_id)
         elif preset == "z-image-turbo":
             prompt = self._zimage(payload, owner_id, project_id)
-        elif preset == "lustify-remix-image":
-            prompt = self._lustify_remix(payload, owner_id, project_id)
-        elif preset == "wan22-remix-video":
-            prompt = self._wan22_remix(payload, assets, owner_id, project_id)
         elif preset in {"realesrgan-photo", "realesrgan-anime"}:
             prompt = self._realesrgan(payload, assets, owner_id, project_id, preset)
         elif preset == "acestep-music":

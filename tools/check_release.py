@@ -22,6 +22,8 @@ secret = re.compile(r'gh[pousr]_[A-Za-z0-9]{25,}|github_pat_[A-Za-z0-9_]{30,}'
                     r'|sk-[A-Za-z0-9]{25,}|-----BEGIN [A-Z ]*PRIVATE KEY-----')
 for name in sorted(set(filter(None, files))):
     path = ROOT / name
+    if not path.is_file():
+        continue
     if any(part in {'data', 'backups', 'logs', '.venv', '__pycache__', 'models', 'runtime'} for part in path.relative_to(ROOT).parts):
         errors.append(f'Private runtime path: {name}')
     if path.suffix.lower() in blocked and name not in screenshots:

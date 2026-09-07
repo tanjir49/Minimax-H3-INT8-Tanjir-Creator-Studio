@@ -7,6 +7,6 @@
 - First-run setup code creation, administrator creation, session authentication, duplicate setup rejection, projects, 23 presets, empty gallery, and SVG preview response passed.
 - The clean account opened Image, Video, Voice, and Music controls in Chrome; the owner approved the screenshots for publication.
 - Fixed two first-run issues in this distribution: missing bootstrap-code creation and using event.currentTarget after an await in the login handler.
-- The optional MiniMax H3 downloader passed PowerShell syntax validation. All seven upstream model URLs returned HTTP 200 without downloading the weights during validation.
+- The optional model downloader passed PowerShell syntax validation. MiniMax H3 and original Wan 2.2 upstream URLs were checked without downloading model weights.
 
 Testing used the installed Python runtime and pinned package versions. A fresh pip installation and full GPU generation across all presets have not been verified. Third-party nodes/models/runtimes are external prerequisites.

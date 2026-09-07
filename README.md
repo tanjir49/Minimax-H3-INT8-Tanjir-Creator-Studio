@@ -12,6 +12,7 @@ The repository ships the workflow and source only. AI models, custom-node implem
 - Windows users can double-click **`Download MiniMax H3 Files.cmd`**.
 - Enter the existing ComfyUI folder and choose the required Core INT8 pack. Turbo, PDD 8-step, and the 3D latent upscaler are separate optional choices.
 - Interrupted downloads can be resumed by running the downloader again. Existing completed files are skipped.
+- For original Wan 2.2 I2V, choose downloader option **5** for the core pack and **6** for optional 4-step LoRAs. See the [Wan 2.2 setup guide](docs/WAN22_SETUP.md).
 
 The downloader fetches files directly from their upstream Hugging Face publishers into the correct `ComfyUI/models/` folders. Review and accept the upstream model licenses before downloading. MiniMax H3's core files are large, so keep ample free disk space.
 
@@ -60,7 +61,6 @@ The frontend uses plain JavaScript/CSS; no Node build step is needed. Python dep
 - MiniMax H3 reference-to-video and cinema profiles
 - Flux image generation/editing
 - Z-Image Turbo
-- Wan 2.2 image-to-video
 - LTX 2.5 text-to-video and image-to-video
 - SeedVR2 image/video upscaling
 - ACE-Step music (API graph constructed in `generation.py`)

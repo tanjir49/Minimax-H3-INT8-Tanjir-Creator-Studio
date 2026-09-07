@@ -422,7 +422,6 @@ def workflow_presets() -> list[dict]:
     return [
         {"id": "flux-image", "label": "Flux Image", "mode": "image", "ratios": ratios, "resolutions": image_resolutions, "references": {"images": 9}, "all_references_optional": True},
         {"id": "z-image-turbo", "label": "Z-Image Turbo — BF16 Quality · 8 Steps", "mode": "image", "ratios": ratios, "resolutions": image_resolutions, "references": {}, "all_references_optional": True},
-        {"id": "lustify-remix-image", "label": "Lustify Remix · Admin", "mode": "image", "ratios": ratios, "resolutions": image_resolutions, "references": {}, "all_references_optional": True, "restricted": True},
         {"id": "minimax-h3", "label": "MiniMax H3 — Fast (16 steps)", "mode": "video", "ratios": ratios, "resolutions": video_resolutions, "durations": list(range(1, 31)), "custom_duration": True, "references": {"images": 9, "videos": 2, "audios": 2, "video_audios": 2, "start_frame": 1, "end_frame": 1}, "all_references_optional": True},
         {"id": "minimax-h3-faster", "label": "MiniMax H3 — Faster (10 steps)", "mode": "video", "ratios": ratios, "resolutions": video_resolutions, "durations": list(range(1, 31)), "custom_duration": True, "references": {"images": 9, "videos": 2, "audios": 2, "video_audios": 2, "start_frame": 1, "end_frame": 1}, "all_references_optional": True},
         {"id": "minimax-h3-superfast", "label": "MiniMax H3 — Superfast (4 steps)", "mode": "video", "ratios": ratios, "resolutions": video_resolutions, "durations": list(range(1, 31)), "custom_duration": True, "references": {"images": 9, "videos": 2, "audios": 2, "video_audios": 2, "start_frame": 1, "end_frame": 1}, "all_references_optional": True},
@@ -438,7 +437,6 @@ def workflow_presets() -> list[dict]:
         {"id": "minimax-h3-edit", "label": "MiniMax H3 Video Edit — Fast", "mode": "edit", "ratios": ratios, "resolutions": video_resolutions, "durations": list(range(1, 31)), "custom_duration": True, "references": {"images": 9, "source_media": 1}, "all_references_optional": False},
         {"id": "minimax-h3-edit-best", "label": "MiniMax H3 Video Edit — Best", "mode": "edit", "ratios": ratios, "resolutions": video_resolutions, "durations": list(range(1, 31)), "custom_duration": True, "references": {"images": 9, "source_media": 1}, "all_references_optional": False},
         {"id": "ltx-2.5", "label": "LTX 2.5 — Local · Audio + Video", "mode": "video", "ratios": ratios, "resolutions": video_resolutions, "durations": list(range(1, 31)), "custom_duration": True, "references": {"images": 1, "start_frame": 1}, "all_references_optional": True},
-        {"id": "wan22-remix-video", "label": "Wan 2.2 Remix I2V · Admin", "mode": "video", "ratios": ratios, "resolutions": ["240p", "360p", "480p"], "durations": list(range(1, 11)), "custom_duration": True, "references": {"images": 1, "start_frame": 1}, "all_references_optional": False, "restricted": True},
         {"id": "realesrgan-photo", "label": "[Image] Real-ESRGAN Photo — Fast · Low VRAM · Default", "mode": "upscale", "media": ["image"], "resolutions": ["1080p", "1440p", "2160p"], "references": {"source_media": 1}, "all_references_optional": False},
         {"id": "realesrgan-anime", "label": "[Image] Real-ESRGAN Anime — Fast · Low VRAM", "mode": "upscale", "media": ["image"], "resolutions": ["1080p", "1440p", "2160p"], "references": {"source_media": 1}, "all_references_optional": False},
         {"id": "realesrgan-video-fast", "label": "[Video] Real-ESRGAN — Fast · Low VRAM · Default", "mode": "upscale", "media": ["video"], "resolutions": ["1080p", "1440p", "2160p"], "references": {"source_media": 1}, "all_references_optional": False},
@@ -446,7 +444,7 @@ def workflow_presets() -> list[dict]:
     ]
 
 
-RESTRICTED_MODELS = {"lustify-remix-image", "wan22-remix-video"}
+RESTRICTED_MODELS: set[str] = set()
 ALL_RESOLUTIONS = ("240p", "360p", "480p", "720p", "1080p", "1440p", "2160p")
 DEFAULT_MEMBER_RESOLUTIONS = {"240p", "360p", "480p", "720p", "1080p"}
 
@@ -1048,8 +1046,6 @@ class StudioHandler(SimpleHTTPRequestHandler):
                     "minimax-h3-edit-best": (9, "pictures"),
                     "flux-image": (9, "sheet"),
                     "ltx-2.5": (1, "image"),
-                    "wan22-remix-video": (1, "image"),
-                    "lustify-remix-image": (0, "profile"),
                 }
                 if preset not in character_modes:
                     raise ApiError(400, "Character Identity is not applicable to this model")
